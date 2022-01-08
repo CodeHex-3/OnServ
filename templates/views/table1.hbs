@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      font-size: medium;
+    }
+
+    .table {
+      overflow: scroll;
+      width: 100%;
+      height: 70vh;
+
+    }
+
+    .srch_ctnr {
+
+      margin-top: auto;
+      width: 100%;
+      height: 100px;
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+
+      flex-wrap: wrap;
+    }
+
+    .srch_ctnr ::placeholder {
+      color: rgb(139, 139, 139);
+
+    }
+
+    input {
+      outline: none;
+      padding: 5px;
+      text-align: center;
+
+    }
+
+    .srch {
+      border: 1px solid white;
+      height: 30px;
+      width: 200px;
+      border-radius: 15px 50px;
+      border: 1px solid rgb(54, 54, 54);
+
+    }
+
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+
+      text-align: center;
+      padding: 8px;
+
+
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: center;
+      background-color: #04AA6D;
+
+      color: white;
+    }
+
+    img {
+      height: 50px;
+      width: 50px;
+    }
+
+    ::placeholder {
+      text-align: center;
+    }
+
+
+    .table::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .table {
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    select {
+      width: 150px;
+    }
+
+    @media screen and (max-width: 400px) {
+      .srch_ctnr {
+        height: 175px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {{>navbar}}
+  <div class="main_ctnr">
+
+    <div class="srch_ctnr">
+
+      <input type="text" class="srch" id="myarea" placeholder="Search By Area" onkeyup="srch_area()">
+      <input type="text" class="srch" id="myAreapin" placeholder="Search By AreaPin" onkeyup="srch_areaPin()">
+      <input type="text" class="srch" id="mycity" placeholder="Search By city" onkeyup="srch_city()">
+      <input type="text" class="srch" id="myinput" placeholder="Search By Appliances" onkeyup="srch_app()">
+
+    </div>
+
+    <div class="table">
+      <table id="customers">
+        <tr>
+
+          <th>UID</th>
+          <th>name</th>
+          <th>ph.no</th>
+          <th>Area</th>
+          <th>AreaPin</th>
+          <th>City</th>
+          <th>App</th>
+        </tr>
+
+
+
+        <tr>
+          {{#each apidata}}
+
+
+          <td class="UID">{{_id}}</td>
+
+          <td class="user_name">{{fname}} {{lname}}</td>
+
+          <td class="pho_no">{{PhoneNumber}}</td>
+
+          <td class="area">{{Area}}</td>
+          <td class="area">{{AreaPin}}</td>
+
+
+
+          <td class="city">{{City}}</td>
+
+
+
+          <td>
+            <select name="Appliances" id="myslct">
+
+              <option class="AppName" id="AppName">check out</option>
+              <option class="AppName" id="AppName">{{WashingMachine}}</option>
+              <option class="AppName" id="AppName">{{AirConditioner}}</option>
+              <option class="AppName" id="AppName">{{Refrigerator}}</option>
+              <option class="AppName" id="AppName">{{InductionStove}}</option>
+              <option class="AppName" id="AppName">{{VacuumCleaner}}</option>
+              <option class="AppName" id="AppName">{{Camera}}</option>
+              <option class="AppName" id="AppName">{{MicrowaveOven}}</option>
+              <option class="AppName" id="AppName">{{WaterPurifier}}</option>
+              <option class="AppName" id="AppName">{{Television}}</option>
+              <option class="AppName" id="AppName">{{MixerGrinder}}</option>
+              <option class="AppName" id="AppName">{{Generator}}</option>
+              <option class="AppName" id="AppName">{{CeilingFan}}</option>
+              <option class="AppName" id="AppName">{{WaterHeater}}</option>
+              <option class="AppName" id="AppName">{{Dryer}}</option>
+
+
+            </select>
+          </td>
+        </tr>
+        {{/each}}
+
+        <script>
+
+
+          for (var numOfRow = 1; numOfRow <= {{ count }}; numOfRow++ ) {
+
+            for (var index = 1; index <= 14; index++) {
+
+              var tr = document.getElementById("customers").getElementsByTagName("tr")[numOfRow].getElementsByTagName("td")[6].getElementsByTagName("option")[index]
+
+              if (tr.innerText === "") {
+
+                tr.style.display = "none";
+
+              }
+              else {
+                tr.style.display = "block";
+              }
+
+            }
+          }
+
+
+
+        </script>
+
+
+
+
+      </table>
+    </div>
+
+
+  </div>
+
+  <script>
+
+
+    function srch_area() {
+      let filter = document.getElementById('myarea').value.toUpperCase()
+      let mytable = document.getElementById('customers')
+      // choosing row of table
+      let tr = mytable.getElementsByTagName('tr')
+
+      for (var i = 0; i < tr.length; i++) {
+
+        let td = tr[i].getElementsByTagName('td')[3]
+
+        if (td) {
+          let textval = td.innerHTML || td.textContent
+          if (textval.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = ""
+            // tr[i].style.background ="red"
+
+          }
+          else {
+            tr[i].style.display = "none"
+          }
+        }
+
+      }
+    }
+
+
+    function srch_areaPin() {
+      let filter = document.getElementById('myAreapin').value.toUpperCase()
+      let mytable = document.getElementById('customers')
+      // choosing row of table
+      let tr = mytable.getElementsByTagName('tr')
+
+      for (var i = 0; i < tr.length; i++) {
+
+        let td = tr[i].getElementsByTagName('td')[4]
+
+        if (td) {
+          let textval = td.innerHTML || td.textContent
+          if (textval.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = ""
+
+
+          }
+          else {
+            tr[i].style.display = "none"
+          }
+        }
+
+      }
+    }
+
+
+
+
+    function srch_city() {
+      let filter = document.getElementById('mycity').value.toUpperCase()
+      let mytable = document.getElementById('customers')
+      // choosing row of table
+      let tr = mytable.getElementsByTagName('tr')
+
+      for (var i = 0; i < tr.length; i++) {
+
+        let td = tr[i].getElementsByTagName('td')[5]
+
+        if (td) {
+          let textval = td.innerHTML || td.textContent
+          if (textval.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = ""
+          }
+          else {
+            tr[i].style.display = "none"
+          }
+        }
+
+      }
+    }
+
+
+
+
+
+    function srch_app() {
+      let filter = document.getElementById('myinput').value.toUpperCase()
+      let mytable = document.getElementById('customers')
+      // choosing row of table
+      let tr = mytable.getElementsByTagName('tr')
+
+      for (var i = 0; i < tr.length; i++) {
+
+        let td = tr[i].getElementsByTagName('td')[6]
+
+        if (td) {
+          let textval = td.innerHTML || td.textContent
+          if (textval.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = ""
+          }
+          else {
+            tr[i].style.display = "none"
+          }
+        }
+
+      }
+    }
+
+
+  </script>
+
+
+</body>
+
+</html>
