@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/CodeHex-3/OnServ/issues"
   },
-  "homepage": "https://github.com/CodeHex-3/OnServ#readme"
+  "homepage": "https://github.com/CodeHex-3/OnServ#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "handlebars-helpers": "^0.10.0",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.1.5",
+    "validator": "^13.7.0"
+  }
 }
